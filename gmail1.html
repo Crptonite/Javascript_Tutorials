@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail Clone</title>
+    <style>
+        :root {
+            --primary-color: #4285f4;
+            --sidebar-width: 256px;
+            --red-color: #d44638;
+            --dark-gray: #5f6368;
+            --light-gray: #f1f3f4;
+            --border-gray: #dadce0;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: var(--white);
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            height: 64px;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            margin-left: 8px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 8px 16px;
+            max-width: 720px;
+        }
+
+        .search-bar input {
+            flex-grow: 1;
+            border: none;
+            background-color: transparent;
+            padding: 8px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            margin-left: 16px;
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .icon:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            border-right: 1px solid var(--border-gray);
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .compose-btn {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #c2e7ff;
+            border-radius: 16px;
+            margin: 8px;
+            cursor: pointer;
+            border: none;
+            font-weight: 500;
+            transition: box-shadow 0.08s linear;
+        }
+
+        .compose-btn:hover {
+            box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302), 0 4px 8px 3px rgba(60, 64, 67, 0.149);
+        }
+
+        .sidebar-nav {
+            margin-top: 16px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px 12px 16px;
+            border-radius: 0 16px 16px 0;
+            cursor: pointer;
+            color: var(--dark-gray);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-item.active {
+            background-color: #d3e3fd;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .nav-item span {
+            margin-left: 16px;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        /* Email List */
+        .email-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .email-toolbar {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .email-list {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .email-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-gray);
+            cursor: pointer;
+        }
+
+        .email-item:hover {
+            box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+            position: relative;
+            z-index: 2;
+        }
+
+        .email-item.unread {
+            background-color: #f6f8fc;
+            font-weight: bold;
+        }
+
+        .email-checkbox {
+            margin-right: 16px;
+        }
+
+        .email-star {
+            margin-right: 16px;
+            color: var(--dark-gray);
+        }
+
+        .email-star.starred {
+            color: #f7cb4d;
+        }
+
+        .email-sender {
+            width: 200px;
+            min-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .email-subject {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .email-time {
+            text-align: right;
+            width: 80px;
+            color: var(--dark-gray);
+            font-size: 12px;
+        }
+
+        /* Email View */
+        .email-view {
+            display: none;
+            padding: 16px;
+            border-left: 1px solid var(--border-gray);
+            width: 60%;
+            overflow-y: auto;
+        }
+
+        .email-view.active {
+            display: block;
+        }
+
+        .email-view-header {
+            margin-bottom: 24px;
+        }
+
+        .email-view-subject {
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .email-view-from {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .email-view-from-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            margin-right: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+
+        .email-view-from-details {
+            flex-grow: 1;
+        }
+
+        .email-view-from-name {
+            font-weight: 500;
+        }
+
+        .email-view-from-email {
+            color: var(--dark-gray);
+            font-size: 12px;
+        }
+
+        .email-view-date {
+            color: var(--dark-gray);
+            font-size: 12px;
+        }
+
+        .email-view-body {
+            line-height: 1.6;
+        }
+
+        /* Compose Modal */
+        .compose-modal {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            width: 600px;
+            max-height: 80vh;
+            background-color: white;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .compose-modal.active {
+            display: flex;
+        }
+
+        .compose-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background-color: #404040;
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .compose-body {
+            flex-grow: 1;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .compose-input {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-gray);
+            margin-bottom: 8px;
+            display: flex;
+        }
+
+        .compose-input input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            font-size: 14px;
+        }
+
+        .compose-textarea {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 14px;
+            line-height: 1.6;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        .compose-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .compose-send-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .compose-send-btn:hover {
+            background-color: #3367d6;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .email-view {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .email-view {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                z-index: 1000;
+                padding-top: 64px;
+            }
+
+            .email-view.active {
+                display: block;
+            }
+
+            .sidebar {
+                width: 72px;
+            }
+
+            .nav-item span {
+                display: none;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 12px;
+                border-radius: 50%;
+            }
+
+            .search-bar {
+                margin-left: 8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .compose-modal {
+                width: calc(100% - 32px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <svg width="40" height="40" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22 16.25c0 .966-.784 1.75-1.75 1.75h-16.5c-.965 0-1.75-.784-1.75-1.75v-8.5c0-.965.785-1.75 1.75-1.75h16.5c.966 0 1.75.785 1.75 1.75v8.5zM12 12L2.251 7.25h19.499L12 12z"/>
+                <path fill="#34A853" d="M12 12l9.75 4.75H2.25L12 12z"/>
+                <path fill="#EA4335" d="M12 12v12.75l9.75-9.5V7.25L12 12z"/>
+                <path fill="#FBBC05" d="M12 24.75v-12.75L2.25 7.25v10.5L12 24.75z"/>
+            </svg>
+            <span class="logo-text">Gmail</span>
+        </div>
+        <div class="search-bar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14V14Z" fill="#5F6368"/>
+            </svg>
+            <input type="text" placeholder="Search mail">
+        </div>
+        <div class="header-icons">
+            <div class="icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM13 7H11V13H17V11H13V7Z" fill="#5F6368"/>
+                </svg>
+            </div>
+            <div class="icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 6L8.59 7.41L13.17 12L8.59 16.59L10 18L16 12L10 6Z" fill="#5F6368"/>
+                </svg>
+            </div>
+            <div class="icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10L12 15L17 10H7Z" fill="#5F6368"/>
+                </svg>
+            </div>
+            <div class="icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="#5F6368"/>
+                    <path d="M12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z" fill="#5F6368"/>
+                </svg>
+            </div>
+            <div class="icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 8C13.1 8 14 7.1 14 6C14 4.9 13.1 4 12 4C10.9 4 10 4.9 10 6C10 7.1 10.9 8 12 8ZM12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10ZM12 16C10.9 16 10 16.9 10 18C10 19.1 10.9 20 12 20C13.1 20 14 19.1 14 18C14 16.9 13.1 16 12 16Z" fill="#5F6368"/>
+                </svg>
+            </div>
+            <div class="icon">
+                <div style="width: 32px; height: 32px; border-radius: 50%; background-color: #e53935; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">U</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="sidebar">
+            <button class="compose-btn" id="composeBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 12H10V10H14V12ZM14 16H10V14H14V16ZM16 8H8V18H16V8H16ZM18 4H6V6H18V4ZM18 6V20H6V6H18V6ZM6 4V6V4V6V4Z" fill="#001D35"/>
+                </svg>
+                <span>Compose</span>
+            </button>
+            <div class="sidebar-nav">
+                <div class="nav-item active">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 15H15C15 16.66 13.65 18 12 18C10.35 18 9 16.66 9 15H4.99V5H19V15Z" fill="#4285F4"/>
+                    </svg>
+                    <span>Inbox</span>
+                </div>
+                <div class="nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM19 18H5C4.45 18 4 17.55 4 17V8L10.94 12.34C11.59 12.7 12.36 12.7 13.01 12.34L20 8V17C20 17.55 19.55 18 19 18ZM12 11L4 6H20L12 11Z" fill="#5F6368"/>
+                    </svg>
+                    <span>Sent</span>
+                </div>
+                <div class="nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 12H15C15 13.66 13.65 15 12 15C10.35 15 9 13.66 9 12H4.99V5H19V12Z" fill="5F6368"/>
+                    </svg>
+                    <span>Drafts</span>
+                </div>
+                <div class="nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 4V3H9V4H15ZM19 6V7H5V6H19ZM16.91 8L16.2 19H7.8L7.09 8H16.91ZM9.17 8H14.83L15.2 18H8.8L9.17 8Z" fill="#5F6368"/>
+                    </svg>
+                    <span>Trash</span>
+                </div>
+                <div class="nav-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 11H17V13H12V11ZM7 11H10V13H7V11Z" fill="#5F6368"/>
+                    </svg>
+                    <span>Spam</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="email-content">
+            <div class="email-toolbar">
+                <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM10 17L5 12.5L6.41 11.09L10 14.42L17.59 7.35L19 8.77L10 17Z" fill="#5F6368"/>
+                    </svg>
+                </div>
+                <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 13H16.17L11.29 17.88C10.9 18.27 10.9 18.91 11.29 19.3C11.68 19.69 12.31 19.69 12.7 19.3L19.29 12.71C19.68 12.32 19.68 11.69 19.29 11.3L12.71 4.7C12.32 4.31 11.69 4.31 11.3 4.7C10.91 5.09 10.91 5.72 11.3 6.11L16.17 11H5C4.45 11 4 11.45 4 12C4 12.55 4.45 13 5 13Z" fill="#5F6368"/>
+                    </svg>
+                </div>
+                <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 13H5C4.45 13 4 12.55 4 12C4 11.45 4.45 11 5 11H19C19.55 11 20 11.45 20 12C20 12.55 19.55 13 19 13Z" fill="#5F6368"/>
+                    </svg>
+                </div>
+                <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 1H8C6.34 1 5 2.34 5 4V16C5 17.66 6.34 19 8 19H20C21.66 19 23 17.66 23 16V4C23 2.34 21.66 1 20 1ZM20 16H8V4H20V16ZM12.5 6C10.57 6 9 7.57 9 9.5C9 11.43 10.57 13 12.5 13C14.43 13 16 11.43 16 9.5C16 7.57 14.43 6 12.5 6ZM5 21C3.34 21 2 19.66 2 18V7H4V18C4 18.55 4.45 19 5 19H16V21H5Z" fill="#5F6368"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="email-list">
+                <div class="email-item unread" onclick="openEmail(1)">
+                    <div class="email-checkbox">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 5V19H5V5H19ZM19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z" fill="#5F6368"/>
+                        </svg>
+                    </div>
+                    <div class="email-star starred">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" fill="#F7CB4D"/>
+                        </svg>
+                    </div>
+                    <div class="email-sender">GitHub</div>
+                    <div class="email-subject">
+                        <span>Your daily GitHub digest - 4 new PRs in your repositories</span>
+                    </div>
+                    <div class="email-time">10:30 AM</div>
+                </div>
+                <div class="email-item" onclick="openEmail(2)">
+                    <div class="email-checkbox">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 5V19H5V5H19ZM19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z" fill="#5F6368"/>
+                        </svg>
+                    </div>
+                    <div class="email-star">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 9.24L14.81 8.62L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27L18.18 21L16.55 13.97L22 9.24ZM12 15.4L8.24 17.67L9.24 13.39L5.92 10.51L10.3 10.13L12 6.1L13.71 10.14L18.09 10.52L14.77 13.4L15.77 17.68L12 15.4Z" fill="#5F6368"/>
+                        </svg>
+                    </div>
+                    <div class="email-sender">LinkedIn</div>
+                    <div class="email-subject">
+                        <span>5 new jobs that match your profile</span>
+                    </div>
+                    <div class="email-time">Yesterday</div>
+                </div>
+                <div class="email-item unread" onclick="openEmail(3)">
+                    <div class="email-checkbox">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 5V19H5V5H19ZM19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z" fill="#5F6368"/>
+                        </svg>
+                    </div>
+                    <div class="email-star">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="www.w3.org/2000/svg">
+                            <path d="M22 9.24L14.81 8.62L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27L18.18 21L16.55 13.97L22 9.24ZM12 15.4L8.24 17.67L9.24 13.39L5.92 10.51L10.3 10.13L12 6.1L13.71 10.14L18.09 10.52L14.77 13.4L15.77 17.68L12 15.4Z" fill="#5F6368"/>
+                        </svg>
+                    </div>
+                    <div class="email-sender">Twitter</div>
+                    <div class="email-subject">
+                        <span>Your weekly Twitter digest - new followers and mentions</span>
+                    </div>
+                    <div class="email-time">Yesterday</div>
+                </div>
+                <div class="email-item" onclick="openEmail(4)">
+                    <div class="email-checkbox">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 5V19H5V5H19ZM19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z" fill="#5F6368"/>
+                        </svg>
+                    </div>
+                    <div class="email-star">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="www.w3.org/2000/svg">
+                            <path d="M22 9.24L14.81 8.62L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27L18.18 21L16.55 13.97L22 9.24ZM12 15.4L8.24 17.67L9.24 13.39L5.92 10.51L10.3 10.13L12 6.1L13.71 10.14L18.09 10.52L14.77 13.4L15.77 17.68L12 15.4Z" fill="#5F6368"/>
+                        </svg>
+                    </div>
+                    <div class="email-sender">Facebook</div>
+                    <div class="email-subject">
+                        <span>You have new notifications from your groups</span>
+                    </div>
+                    <div class="email-time">Mar 15</div>
+                </div>
+                <div class="email-item" onclick="openEmail(5)">
+                    <div class="email-checkbox">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 5V19H5V5H19ZM19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z" fill="#5F6368"/>
+                        </svg>
+                    </div>
+                    <div class="email-star starred">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" fill="#F7CB4D"/>
+                        </svg>
+                    </div>
+                    <div class="email-sender">Netflix</div>
+                    <div class="email-subject">
+                        <span>New shows added to your watchlist</span>
+                    </div>
+                    <div class="email-time">Mar 14</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="email-view" id="emailView">
+            <div class="email-view-header">
+                <div class="email-view-subject">Your daily GitHub digest - 4 new PRs in your repositories</div>
+                <div class="email-view-from">
+                    <div class="email-view-from-avatar">G</div>
+                    <div class="email-view-from-details">
+                        <div class="email-view-from-name">GitHub</div>
+                        <div class="email-view-from-email">notifications@github.com</div>
+                    </div>
+                    <div class="email-view-date">Apr 10, 2023, 10:30 AM</div>
+                </div>
+            </div>
+            <div class="email-view-body">
+                <p>Hello User,</p>
+                <p>Here's what's been happening in your repositories and from people you follow today:</p>
+                
+                <h3>New Pull Requests</h3>
+                <ul>
+                    <li>
+                        <strong>user/repo1</strong>: Created pull request #123 - Update dependencies to latest versions
+                        <p>Submitted by: developer1</p>
+                    </li>
+                    <li>
+                        <strong>user/repo2</strong>: Created pull request #124 - Fix user authentication issue
+                        <p>Submitted by: developer2</p>
+                    </li>
+                    <li>
+                        <strong>user/repo3</strong>: Created pull request #125 - Add new analytics dashboard
+                        <p>Submitted by: developer3</p>
+                    </li>
+                    <li>
+                        <strong>user/repo4</strong>: Created pull request #126 - Update documentation
+                        <p>Submitted by: developer4</p>
+                    </li>
+                </ul>
+
+                <h3>Recent Activity</h3>
+                <p>5 new issues were reported across your repositories.</p>
+                <p>3 repositories you contribute to were starred recently.</p>
+                
+                <p>To view all your notifications, visit your <a href="https://github.com/notifications">GitHub Notifications page</a>.</p>
+                
+                <p>Thanks,<br>The GitHub Team</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="compose-modal" id="composeModal">
+        <div class="compose-header">
+            <span>New Message</span>
+            <div>
+                <div class="icon" style="width: 24px; height: 24px; color: white;">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="compose-body">
+            <div class="compose-input">
+                <input type="text" placeholder="To">
+            </div>
+            <div class="compose-input">
+                <input type="text" placeholder="Subject">
+            </div>
+            <textarea class="compose-textarea" placeholder="Compose email"></textarea>
+        </div>
+        <div class="compose-footer">
+            <button class="compose-send-btn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample email data
+        const emails = [
+            {
+                id: 1,
+                sender: "GitHub",
+                email: "notifications@github.com",
+                subject: "Your daily GitHub digest - 4 new PRs in your repositories",
+                time: "10:30 AM",
+                date: "Apr 10, 2023, 10:30 AM",
+                starred: true,
+                unread: true,
+                body: `
+                    <p>Hello User,</p>
+                    <p>Here's what's been happening in your repositories and from people you follow today:</p>
+                    
+                    <h3>New Pull Requests</h3>
+                    <ul>
+                        <li>
+                            <strong>user/repo1</strong>: Created pull request #123 - Update dependencies to latest versions
+                            <p>Submitted by: developer1</p>
+                        </li>
+                        <li>
+                            <strong>user/repo2</strong>: Created pull request #124 - Fix user authentication issue
+                            <p>Submitted by: developer2</p>
+                        </li>
+                        <li>
+                            <strong>user/repo3</strong>: Created pull request #125 - Add new analytics dashboard
+                            <p>Submitted by: developer3</p>
+                        </li>
+                        <li>
+                            <strong>user/repo4</strong>: Created pull request #126 - Update documentation
+                            <p>Submitted by: developer4</p>
+                        </li>
+                    </ul>
+
+                    <h3>Recent Activity</h3>
+                    <p>5 new issues were reported across your repositories.</p>
+                    <p>3 repositories you contribute to were starred recently.</p>
+                    
+                    <p>To view all your notifications, visit your <a href="https://github.com/notifications">GitHub Notifications page</a>.</p>
+                    
+                    <p>Thanks,<br>The GitHub Team</p>
+                `
+            },
+            {
+                id: 2,
+                sender: "LinkedIn",
+                email: "noreply@linkedin.com",
+                subject: "5 new jobs that match your profile",
+                time: "Yesterday",
+                date: "Apr 9, 2023, 2:45 PM",
+                starred: false,
+                unread: false,
+                body: `
+                    <p>Hi User,</p>
+                    
+                    <p>Based on your profile and preferences, we found 5 new jobs that might interest you:</p>
+                    
+                    <h3>Senior Frontend Developer</h3>
+                    <p>TechCorp - San Francisco, CA</p>
+                    <p>5 days ago</p>
+                    
+                    <h3>Full Stack Engineer</h3>
+                    <p>InnovateCo - Remote</p>
+                    <p>3 days ago</p>
+                    
+                    <h3>UI/UX Designer</h3>
+                    <p>DesignStudio - New York, NY</p>
+                    <p>1 day ago</p>
+                    
+                    <h3>Lead Cloud Architect</h3>
+                    <p>CloudSolutions - Austin, TX</p>
+                    <p>1 day ago</p>
+                    
+                    <h3>DevOps Engineer</h3>
+                    <p>FastScale - Remote</p>
+                    <p>Just posted</p>
+                    
+                    <p><a href="#">View all 24 recommended jobs</a> based on your profile and search activity.</p>
+                    
+                    <p>Best regards,<br>The LinkedIn Team</p>
+                `
+            },
+            {
+                id: 3,
+                sender: "Twitter",
+                email: "notifications@twitter.com",
+                subject: "Your weekly Twitter digest - new followers and mentions",
+                time: "Yesterday",
+                date: "Apr 9, 2023, 9:15 AM",
+                starred: false,
+                unread: true,
+                body: `
+                    <p>Hi User (@username),</p>
+                    
+                    <h3>Your Twitter weekly digest</h3>
+                    
+                    <h4>New followers</h4>
+                    <p>You have 12 new followers this week:</p>
+                    <p>@follower1, @follower2, @follower3, and 9 others.</p>
+                    
+                    <h4>Mentions</h4>
+                    <p>Your tweet was mentioned 5 times:</p>
+                    <p>"Great article! Learned a lot from your insights." - @user1</p>
+                    <p>"Interesting perspective on this topic." - @user2</p>
+                    
+                    <h4>Likes and Retweets</h4>
+                    <p>Your tweets received 32 likes and 15 retweets this week.</p>
+                    <p>Your most popular tweet was about "The future of web development".</p>
+                    
+                    <p>Keep the conversations going!</p>
+                    
+                    <p>Twitter</p>
+                `
+            },
+            {
+                id: 4,
+                sender: "Facebook",
+                email: "notification@facebookmail.com",
+                subject: "You have new notifications from your groups",
+                time: "Mar 15",
+                date: "Mar 15, 2023, 7:30 PM",
+                starred: false,
+                unread: false,
+                body: `
+                    <p>Hi User,</p>
+                    
+                    <p>You have new activity in your Facebook groups:</p>
+                    
+                    <h3>Web Developers Group</h3>
+                    <p>New post: "React Hooks - Best Practices" by John Doe</p>
+                    <p>12 comments and 45 likes on your post about CSS Grid</p>
+                    
+                    <h3>Tech Entrepreneurs</h3>
+                    <p>New event: Virtual Meetup on April 5th</p>
+                    <p>5 new job postings in the group</p>
+                    
+                    <h3>Local Community</h3>
+                    <p>New announcement about upcoming neighborhood meeting</p>
+                    <p>New discussion started about local businesses</p>
+                    
+                    <p><a href="#">See all notifications</a></p>
+                    
+                    <p>Thanks,<br>The Facebook Team</p>
+                `
+            },
+            {
+                id: 5,
+                sender: "Netflix",
+                email: "info@mail.netflix.com",
+                subject: "New shows added to your watchlist",
+                time: "Mar 14",
+                date: "Mar 14, 2023, 11:20 AM",
+                starred: true,
+                unread: false,
+                body: `
+                    <p>Hello User,</p>
+                    
+                    <p>We've added new shows we think you'll love based on what you've watched:</p>
+                    
+                    <h3>New Releases</h3>
+                    <p><strong>The Last of Us</strong> - New episodes every Sunday</p>
+                    <p><strong>The Witcher: Blood Origin</strong> - Season 1 now available</p>
+                    
+                    <h3>Continuing Series</h3>
+                    <p><strong>Stranger Things</strong> - Season 4, Part 2</p>
+                    <p><strong>The Crown</strong> - Season 5 now streaming</p>
+                    
+                    <h3>Recommended for You</h3>
+                    <p><strong>Dark</strong> - 97% match</p>
+                    <p><strong>Mindhunter</strong> - 96% match</p>
+                    
+                    <p>Start watching now at <a href="https://www.netflix.com">www.netflix.com</a></p>
+                    
+                    <p>Happy watching,<br>The Netflix Team</p>
+                `
+            }
+        ];
+
+        // DOM elements
+        const composeBtn = document.getElementById('composeBtn');
+        const composeModal = document.getElementById('composeModal');
+        const emailView = document.getElementById('emailView');
+
+        // Open compose modal
+        composeBtn.addEventListener('click', () => {
+            composeModal.classList.add('active');
+        });
+
+        // Close compose modal when clicking X
+        composeModal.querySelector('.icon').addEventListener('click', () => {
+            composeModal.classList.remove('active');
+        });
+
+        // Open email view
+        function openEmail(id) {
+            const email = emails.find(e => e.id === id);
+            
+            if (email) {
+                emailView.classList.add('active');
+                emailView.querySelector('.email-view-subject').textContent = email.subject;
+                
+                const fromElement = emailView.querySelector('.email-view-from');
+                fromElement.querySelector('.email-view-from-avatar').textContent = email.sender.charAt(0);
+                fromElement.querySelector('.email-view-from-name').textContent = email.sender;
+                fromElement.querySelector('.email-view-from-email').textContent = email.email;
+                fromElement.querySelector('.email-view-date').textContent = email.date;
+                
+                emailView.querySelector('.email-view-body').innerHTML = email.body;
+                
+                // Mark as read
+                document.querySelector(`.email-item:nth-child(${id})`).classList.remove('unread');
+                email.unread = false;
+            }
+        }
+
+        // Close email view (for mobile)
+        document.addEventListener('click', (e) => {
+            if (e.target === emailView) {
+                emailView.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

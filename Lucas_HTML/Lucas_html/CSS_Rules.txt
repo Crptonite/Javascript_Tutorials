@@ -1,0 +1,115 @@
+Page 1
+Selector {
+		property1 :  value;
+  		property2:   value;
+}
+
+
+Which part of a CSS rule specifies the style to be applied?
+
+The correct answer is: Property
+
+But here's a quick breakdown of all parts for clarity:
+
+Selector: Targets the HTML element(s) to style (e.g., p, .class, #id).
+
+Property: The specific aspect of the element to style (e.g., color, font-size).
+
+Value: The actual style applied to the property (e.g., blue, 16px).
+
+Declaration Block: Contains one or more property–value pairs inside { }.
+
+Example:
+css
+Copy
+Edit
+p {
+    color: blue;
+}
+Selector: p
+
+Property: color
+
+Value: blue
+
+Declaration Block: { color: blue; }
+
+So again, Value is the part that specifies the style to be applied.
+
+Page 2
+Selectors
+
+Identifying Specific HTML Elements
+
+ID
+
+­Every element in a web page can be assigned a unique id value which uniquely identify itself in the web page. The analogy for this is your admin no in NYP. ­For example:      
+
+<h1 id=“mainHeading”>Cyber bullying Crackdown</h1>
+
+­<p id=“specialNote”>This is a special note…</p>
+
+We can then specify the CSS rule for these ids like this :
+
+       #specialNote   { color: red }
+
+CLASS
+
+­Every element in a web page may belong to one or more classes. Elements with the same class value  belongs to the same class. Class is especially useful in styling. ­Assign CSS properties to a group of elements who has the same value for their class attribute.
+
+­For example:
+
+   <h1 id=“mainHeading” class=“center”>Cyber bullying Crackdown</h1>
+
+   <h2 id=“newsH2” class=“center underline”>Recent Tragedies</h2>
+
+   <h1 class="center">This heading will be centre-aligned</h1>
+
+   <p class="left">This paragraph will also be left-aligned.</p>
+
+   <p class=“center">This paragraph will be centre-aligned</h1>
+
+   <p class="right">This paragraph will also be right-aligned.</p>
+
+In specifying the CSS Rule for the classes defined, we must indicate with a .dot in front of the class name. We can also specify the CSS rule for a class specific to a html tag, as shown below :
+
+.right   { text-align: right }
+
+.left   { text-align:left }
+
+.center   { text-align:center}
+
+h1.center   { text-decoration:underline}
+
+CSS Selector using ID
+
+ id Selector
+
+­Assign CSS properties to a particular element which has the id value. ­For example:
+
+­<p id=“specialNote”>This is a special note…</p>
+
+#specialNote   { color: red }
+
+Which CSS selector is used to target an element with a specific ID?
+
+Universal selector
+
+Attribute selector
+
+ID selector (Answer)
+
+Class selector
+
+
+Page 3
+
+Where Do We Insert CSS?
+
+ There are 3 ways to insert CSS:
+
+­Inline style
+
+­Internal/embedded style
+
+­External style

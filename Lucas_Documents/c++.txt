@@ -1,0 +1,3 @@
+C++ <type_traits>
+std::is_integral_v<type>	Check whether the 
+std::is_floating_point_v<type>	Check 	
