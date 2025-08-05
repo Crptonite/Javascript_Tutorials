@@ -1,0 +1,16 @@
+.mario {
+  position: absolute;
+  top: -40px;
+  left: 0px;
+  animation: drive 3s linear 0s infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes drive {
+    from{
+      transform: translateX(0px) scaleX(1); /* facing right */
+    }
+    to {
+      transform: translateX(calc(100vw - 100px)) scaleX(-1); /* facing left */
+    }
+  }
