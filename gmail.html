@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .email-item:hover {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .sidebar-item:hover {
+            background-color: rgba(0,0,0,0.05);
+            border-radius: 0 16px 16px 0;
+        }
+        .active-email {
+            background-color: rgba(0,0,0,0.05);
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            .sidebar-text {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex h-screen">
+    <!-- Sidebar -->
+    <div class="sidebar bg-white h-full flex-shrink-0 w-64 border-r border-gray-200 transition-all duration-300">
+        <div class="p-4 flex items-center">
+            <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xl">G</div>
+            <h1 class="ml-2 font-bold text-xl sidebar-text">Mail</h1>
+        </div>
+        
+        <!-- Compose Button -->
+        <button class="ml-4 mt-2 mb-6 px-4 py-3 bg-blue-100 text-blue-700 rounded-full flex items-center font-medium hover:shadow-md transition-all duration-200 sidebar-button">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            <span class="ml-2 sidebar-text">Compose</span>
+        </button>
+        
+        <!-- Navigation -->
+        <nav>
+            <a href="#" class="block pl-4 py-3 flex items-center sidebar-item active">
+                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="ml-3 sidebar-text">Inbox</span>
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full sidebar-text">1,234</span>
+            </a>
+            <a href="#" class="block pl-4 py-3 flex items-center sidebar-item">
+                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="ml-3 sidebar-text">Snoozed</span>
+            </a>
+            <a href="#" class="block pl-4 py-3 flex items-center sidebar-item">
+                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                </svg>
+                <span class="ml-3 sidebar-text">Starred</span>
+            </a>
+            <a href="#" class="block pl-4 py-3 flex items-center sidebar-item">
+                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                </svg>
+                <span class="ml-3 sidebar-text">More</span>
+            </a>
+        </nav>
+        
+        <div class="mt-6 px-4 sidebar-text">
+            <p class="text-xs font-medium text-gray-500 mb-2">Labels</p>
+            <a href="#" class="block py-1 text-sm text-gray-700">Work</a>
+            <a href="#" class="block py-1 text-sm text-gray-700">Personal</a>
+            <a href="#" class="block py-1 text-sm text-gray-700">Important</a>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 py-2 px-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <button class="p-2 rounded-full hover:bg-gray-100">
+                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                
+                <div class="ml-4 flex items-center">
+                    <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xl">G</div>
+                    <div class="ml-2 text-xl font-semibold">Gmail</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 mx-4 flex-1 max-w-2xl">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" placeholder="Search mail" class="bg-transparent border-none focus:outline-none ml-2 w-full">
+            </div>
+            
+            <div class="flex items-center">
+                <button class="p-2 rounded-full hover:bg-gray-100">
+                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                </button>
+                <button class="p-2 rounded-full hover:bg-gray-100 ml-2">
+                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </button>
+                <button class="p-2 rounded-full hover:bg-gray-100 ml-2">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ff809249-e8d3-44cb-829d-515623dbb9cd.png" alt="User profile picture showing a person with dark hair and neutral expression" class="w-8 h-8 rounded-full">
+                </button>
+            </div>
+        </header>
+        
+        <!-- Email List -->
+        <div class="flex-1 flex overflow-hidden">
+            <div class="w-full md:w-2/5 bg-white border-r border-gray-200 overflow-y-auto">
+                <!-- Email List Controls -->
+                <div class="border-b border-gray-200 py-2 px-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <button class="p-2 rounded-full hover:bg-gray-100">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <button class="p-2 rounded-full hover:bg-gray-100 ml-2">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="text-sm text-gray-500">
+                        1-50 of 1,234
+                    </div>
+                </div>
+                
+                <!-- Email Items -->
+                <div id="email-list">
+                    <!-- Example Email -->
+                    <div class="email-item border-b border-gray-200 py-3 px-4 cursor-pointer flex items-start active-email">
+                        <div class="flex items-center mr-4">
+                            <input type="checkbox" class="rounded text-blue-500">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <p class="font-medium truncate">Amazon Shipping</p>
+                                <p class="text-xs text-gray-500 ml-2">Jun 15</p>
+                            </div>
+                            <p class="text-sm font-medium truncate">Your order has shipped!</p>
+                            <p class="text-sm text-gray-500 truncate">Your recent order #12345 has been shipped and will arrive on...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Example Email -->
+                    <div class="email-item border-b border-gray-200 py-3 px-4 cursor-pointer flex items-start hover:bg-gray-50">
+                        <div class="flex items-center mr-4">
+                            <input type="checkbox" class="rounded text-blue-500">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <p class="font-medium truncate">LinkedIn</p>
+                                <p class="text-xs text-gray-500 ml-2">Jun 14</p>
+                            </div>
+                            <p class="text-sm font-medium truncate">New job opportunities matching your profile</p>
+                            <p class="text-sm text-gray-500 truncate">Based on your profile, we've found 5 new jobs you might be interested in...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Add more email items as needed -->
+                </div>
+            </div>
+            
+            <!-- Email Content -->
+            <div class="hidden md:flex md:w-3/5 bg-white overflow-y-auto">
+                <div class="p-6 w-full">
+                    <!-- Email Header -->
+                    <div class="border-b border-gray-200 pb-4">
+                        <div class="flex justify-between items-start mb-4">
+                            <h2 class="text-2xl font-semibold">Your Amazon order has shipped!</h2>
+                            <div class="flex space-x-2">
+                                <button class="p-2 rounded-full hover:bg-gray-100">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                                    </svg>
+                                </button>
+                                <button class="p-2 rounded-full hover:bg-gray-100">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                                <button class="p-2 rounded-full hover:bg-gray-100">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/51c60d57-a2cc-47ca-ae1a-0572ff4fca07.png" alt="Amazon customer service representative smiling" class="w-10 h-10 rounded-full">
+                                <div class="ml-3">
+                                    <p class="font-medium">Amazon Shipping</p>
+                                    <p class="text-sm text-gray-500">to me</p>
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                Jun 15, 2023, 10:30 AM
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Email Body -->
+                    <div class="py-6">
+                        <p class="mb-4">Hello Customer,</p>
+                        <p class="mb-4">We're excited to let you know that your recent order #12345 has shipped and is on its way to you!</p>
+                        <p class="mb-4">Expected delivery date: June 18, 2023</p>
+                        <p class="mb-4">You can track your package using the following link: <a href="#" class="text-blue-500 hover:underline">Track Package</a></p>
+                        <p class="mb-4">Here's what's included in your shipment:</p>
+                        
+                        <ul class="list-disc pl-6 mb-4">
+                            <li class="mb-2">Wireless Headphones (Qty: 1)</li>
+                            <li class="mb-2">USB-C Charging Cable (Qty: 2)</li>
+                        </ul>
+                        
+                        <p class="mb-4">Thank you for shopping with Amazon!</p>
+                        <p>Sincerely,<br>The Amazon Team</p>
+                    </div>
+                    
+                    <!-- Email Actions -->
+                    <div class="border-t border-gray-200 pt-4">
+                        <button class="px-4 py-2 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">Reply</button>
+                        <button class="px-4 py-2 ml-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200">Forward</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Mobile responsiveness
+        document.querySelector('.sidebar-button').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('md:w-64');
+            document.querySelectorAll('.sidebar-text').forEach(el => {
+                el.classList.toggle('hidden');
+            });
+        });
+        
+        // Email selection
+        document.querySelectorAll('.email-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.email-item').forEach(i => {
+                    i.classList.remove('active-email');
+                });
+                this.classList.add('active-email');
+            });
+        });
+    </script>
+</body>
+</html>
+

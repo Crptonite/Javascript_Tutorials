@@ -1,0 +1,15 @@
+✅ 2. Bug in firstDay Calculation
+js
+Copy
+Edit
+const firstDay = new Date(currentYear, currentMonth, 0);
+This gets the last day of the previous month, not the first day of the current month.
+
+It should be:
+
+js
+Copy
+Edit
+const firstDay = new Date(currentYear, currentMonth, 1);
+Otherwise, firstDayIndex may be off.
+

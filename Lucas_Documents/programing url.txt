@@ -1,0 +1,12 @@
+
+Javascript:
+https://github.com/pradipchaudhary/100-javascript-projects
+
+https://github.com/Esri/enterprise-build-sample-js
+
+https://github.com/scottdurow/contoso-real-estate-pp
+
+https://github.com/Blazity/next-enterprise
+
+
+https://github.com/metarhia/impress

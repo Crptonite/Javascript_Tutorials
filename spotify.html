@@ -1,0 +1,449 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   My Spotify Clone
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+ </head>
+ <body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between px-6 py-4 bg-gray-800 sticky top-0 z-50">
+   <div class="flex items-center space-x-4">
+    <img alt="Spotify style logo with green circle and white S letter" class="w-10 h-10" height="40" src="https://storage.googleapis.com/a1aa/image/66abdbd5-d2c4-4295-c30b-f52f7d8cae46.jpg" width="40"/>
+    <h1 class="text-2xl font-bold tracking-wide">
+     MySpotify
+    </h1>
+   </div>
+   <div class="hidden md:flex space-x-6">
+    <a class="hover:text-green-500 transition" href="#browse">
+     Browse
+    </a>
+    <a class="hover:text-green-500 transition" href="#library">
+     Your Library
+    </a>
+    <a class="hover:text-green-500 transition" href="#premium">
+     Premium
+    </a>
+   </div>
+   <div class="flex items-center space-x-4">
+    <button class="bg-green-500 hover:bg-green-600 px-4 py-1 rounded-full font-semibold transition" id="loginBtn">
+     Log In
+    </button>
+    <button class="bg-transparent border border-green-500 hover:bg-green-500 px-4 py-1 rounded-full font-semibold transition" id="signupBtn">
+     Sign Up
+    </button>
+   </div>
+  </nav>
+  <!-- Main Content -->
+  <main class="flex-grow flex flex-col md:flex-row overflow-hidden">
+   <!-- Sidebar -->
+   <aside aria-label="Sidebar navigation" class="hidden md:flex flex-col bg-gray-800 w-64 p-6 space-y-6 overflow-y-auto">
+    <div class="flex items-center space-x-3">
+     <i class="fas fa-home text-green-500 text-xl">
+     </i>
+     <a class="font-semibold hover:text-green-500 transition" href="#home">
+      Home
+     </a>
+    </div>
+    <div class="flex items-center space-x-3">
+     <i class="fas fa-search text-gray-400 text-xl">
+     </i>
+     <a class="hover:text-green-500 transition" href="#search">
+      Search
+     </a>
+    </div>
+    <div class="flex items-center space-x-3">
+     <i class="fas fa-book-open text-gray-400 text-xl">
+     </i>
+     <a class="hover:text-green-500 transition" href="#library">
+      Your Library
+     </a>
+    </div>
+    <hr class="border-gray-700"/>
+    <div class="flex flex-col space-y-2 overflow-y-auto max-h-[calc(100vh-200px)]">
+     <a class="hover:text-green-500 transition" href="#playlist1">
+      My Playlist #1
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist2">
+      Chill Vibes
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist3">
+      Top Hits 2024
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist4">
+      Workout Mix
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist5">
+      Jazz Classics
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist6">
+      Indie Essentials
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist7">
+      Focus Music
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist8">
+      Party Time
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist9">
+      Relax &amp; Unwind
+     </a>
+     <a class="hover:text-green-500 transition" href="#playlist10">
+      Throwback
+     </a>
+    </div>
+   </aside>
+   <!-- Content Area -->
+   <section class="flex-grow p-6 overflow-y-auto">
+    <!-- Featured Section -->
+    <section class="mb-10" id="browse">
+     <h2 class="text-3xl font-bold mb-6">
+      Browse
+     </h2>
+     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-green-500/50 transition cursor-pointer">
+       <img alt="Album cover with abstract green shapes and text New Releases" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/4b2b859a-22dc-421f-c4cd-c442cc5ffd9a.jpg" width="300"/>
+       <div class="p-4">
+        <h3 class="font-semibold text-lg">
+         New Releases
+        </h3>
+        <p class="text-gray-400 text-sm mt-1">
+         Latest albums and singles
+        </p>
+       </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-green-500/50 transition cursor-pointer">
+       <img alt="Album cover with black background and green text Top Charts" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/8b31fdcd-b547-46bf-e13f-5fcfa41f3739.jpg" width="300"/>
+       <div class="p-4">
+        <h3 class="font-semibold text-lg">
+         Top Charts
+        </h3>
+        <p class="text-gray-400 text-sm mt-1">
+         Trending songs worldwide
+        </p>
+       </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-green-500/50 transition cursor-pointer">
+       <img alt="Album cover with green background and black text Discover" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/9ecfa80e-3ef8-458d-92ef-744d10fa1a8c.jpg" width="300"/>
+       <div class="p-4">
+        <h3 class="font-semibold text-lg">
+         Discover
+        </h3>
+        <p class="text-gray-400 text-sm mt-1">
+         Personalized recommendations
+        </p>
+       </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-green-500/50 transition cursor-pointer">
+       <img alt="Album cover with dark gray background and green text Podcasts" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/e0b74d8e-1394-4d92-0331-5343d7359f27.jpg" width="300"/>
+       <div class="p-4">
+        <h3 class="font-semibold text-lg">
+         Podcasts
+        </h3>
+        <p class="text-gray-400 text-sm mt-1">
+         Trending and popular podcasts
+        </p>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- Your Library Section -->
+    <section class="mb-10" id="library">
+     <h2 class="text-3xl font-bold mb-6">
+      Your Library
+     </h2>
+     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-green-500/50 transition cursor-pointer">
+       <img alt="Playlist cover with black background and green text Liked Songs" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/dacf8e24-ae1d-40b9-610f-389c42d27c27.jpg" width="300"/>
+       <div class="p-4">
+        <h3 class="font-semibold text-lg">
+         Liked Songs
+        </h3>
+        <p class="text-gray-400 text-sm mt-1">
+         Your favorite tracks
+        </p>
+       </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-green-500/50 transition cursor-pointer">
+       <img alt="Playlist cover with green background and black text Recently Played" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/c6d20775-b1b1-4d50-8c1c-ff5ad14f8f46.jpg" width="300"/>
+       <div class="p-4">
+        <h3 class="font-semibold text-lg">
+         Recently Played
+        </h3>
+        <p class="text-gray-400 text-sm mt-1">
+         Your recent listening history
+        </p>
+       </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-green-500/50 transition cursor-pointer">
+       <img alt="Playlist cover with dark gray background and green text Made For You" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/4dd0b783-bb07-4cf3-407c-3fea7f193d1d.jpg" width="300"/>
+       <div class="p-4">
+        <h3 class="font-semibold text-lg">
+         Made For You
+        </h3>
+        <p class="text-gray-400 text-sm mt-1">
+         Personalized playlists
+        </p>
+       </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-green-500/50 transition cursor-pointer">
+       <img alt="Playlist cover with black background and green text Podcasts" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/932308c3-2e62-4daf-d5c2-adcdf3f0aaac.jpg" width="300"/>
+       <div class="p-4">
+        <h3 class="font-semibold text-lg">
+         Podcasts
+        </h3>
+        <p class="text-gray-400 text-sm mt-1">
+         Your subscribed podcasts
+        </p>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- Premium Section -->
+    <section class="mb-10" id="premium">
+     <h2 class="text-3xl font-bold mb-6">
+      Premium
+     </h2>
+     <div class="bg-green-600 rounded-lg p-8 max-w-4xl mx-auto text-center shadow-lg">
+      <h3 class="text-4xl font-extrabold mb-4">
+       Get Premium
+      </h3>
+      <p class="mb-6 text-lg">
+       Enjoy ad-free music, offline listening, and unlimited skips.
+      </p>
+      <button class="bg-gray-900 hover:bg-gray-800 text-green-500 font-bold py-3 px-8 rounded-full transition">
+       Get Premium Now
+      </button>
+     </div>
+    </section>
+   </section>
+  </main>
+  <!-- Player Controls -->
+  <footer class="bg-gray-800 p-4 flex flex-col md:flex-row items-center justify-between sticky bottom-0 z-50">
+   <div class="flex items-center space-x-4 w-full md:w-1/3">
+    <img alt="Album cover thumbnail with green background and white text Cover" class="w-14 h-14 rounded" height="56" src="https://storage.googleapis.com/a1aa/image/58bdd64e-b866-49a1-880c-2c75893e1f1d.jpg" width="56"/>
+    <div>
+     <p class="font-semibold">
+      Song Title
+     </p>
+     <p class="text-gray-400 text-sm">
+      Artist Name
+     </p>
+    </div>
+    <button class="text-green-500 hover:text-green-400 ml-auto">
+     <i class="fas fa-heart">
+     </i>
+    </button>
+   </div>
+   <div class="flex flex-col items-center space-y-2 w-full md:w-1/3 mt-4 md:mt-0">
+    <div class="flex items-center space-x-6 text-gray-400">
+     <button class="hover:text-green-500 transition">
+      <i class="fas fa-random">
+      </i>
+     </button>
+     <button class="hover:text-green-500 transition">
+      <i class="fas fa-step-backward">
+      </i>
+     </button>
+     <button class="bg-green-500 hover:bg-green-600 text-gray-900 rounded-full p-4 transition" id="playPauseBtn">
+      <i class="fas fa-play" id="playPauseIcon">
+      </i>
+     </button>
+     <button class="hover:text-green-500 transition">
+      <i class="fas fa-step-forward">
+      </i>
+     </button>
+     <button class="hover:text-green-500 transition">
+      <i class="fas fa-redo">
+      </i>
+     </button>
+    </div>
+    <input class="w-full md:w-80 h-1 rounded-lg bg-gray-600 accent-green-500 cursor-pointer" id="progressBar" max="100" min="0" type="range" value="0"/>
+    <div class="flex justify-between w-full md:w-80 text-xs text-gray-400">
+     <span id="currentTime">
+      0:00
+     </span>
+     <span id="duration">
+      3:45
+     </span>
+    </div>
+   </div>
+   <div class="flex items-center space-x-4 w-full md:w-1/3 justify-end mt-4 md:mt-0">
+    <button class="hover:text-green-500 transition">
+     <i class="fas fa-list">
+     </i>
+    </button>
+    <button class="hover:text-green-500 transition">
+     <i class="fas fa-volume-up">
+     </i>
+    </button>
+    <input class="w-24 h-1 rounded-lg bg-gray-600 accent-green-500 cursor-pointer" id="volumeControl" max="100" min="0" type="range" value="50"/>
+   </div>
+  </footer>
+  <!-- Login Modal -->
+  <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50" id="loginModal">
+   <div class="bg-gray-800 rounded-lg p-8 w-11/12 max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center">
+     Log In
+    </h2>
+    <form class="flex flex-col space-y-4" id="loginForm">
+     <input class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-green-500" id="loginEmail" placeholder="Email" required="" type="email"/>
+     <input class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-green-500" id="loginPassword" placeholder="Password" required="" type="password"/>
+     <button class="bg-green-500 hover:bg-green-600 py-3 rounded font-semibold transition" type="submit">
+      Log In
+     </button>
+    </form>
+    <button class="mt-4 w-full text-center text-gray-400 hover:text-green-500 transition" id="closeLoginModal">
+     Cancel
+    </button>
+   </div>
+  </div>
+  <!-- Signup Modal -->
+  <div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50" id="signupModal">
+   <div class="bg-gray-800 rounded-lg p-8 w-11/12 max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center">
+     Sign Up
+    </h2>
+    <form class="flex flex-col space-y-4" id="signupForm">
+     <input class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-green-500" id="signupName" placeholder="Full Name" required="" type="text"/>
+     <input class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-green-500" id="signupEmail" placeholder="Email" required="" type="email"/>
+     <input class="p-3 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-green-500" id="signupPassword" placeholder="Password" required="" type="password"/>
+     <button class="bg-green-500 hover:bg-green-600 py-3 rounded font-semibold transition" type="submit">
+      Sign Up
+     </button>
+    </form>
+    <button class="mt-4 w-full text-center text-gray-400 hover:text-green-500 transition" id="closeSignupModal">
+     Cancel
+    </button>
+   </div>
+  </div>
+  <script>
+   // Modal toggles
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const loginModal = document.getElementById('loginModal');
+    const signupModal = document.getElementById('signupModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const closeSignupModal = document.getElementById('closeSignupModal');
+
+    loginBtn.addEventListener('click', () => {
+      loginModal.classList.remove('hidden');
+    });
+    signupBtn.addEventListener('click', () => {
+      signupModal.classList.remove('hidden');
+    });
+    closeLoginModal.addEventListener('click', () => {
+      loginModal.classList.add('hidden');
+    });
+    closeSignupModal.addEventListener('click', () => {
+      signupModal.classList.add('hidden');
+    });
+
+    // Play/Pause button toggle
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playPauseIcon = document.getElementById('playPauseIcon');
+    let isPlaying = false;
+
+    playPauseBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      playPauseIcon.classList.toggle('fa-play', !isPlaying);
+      playPauseIcon.classList.toggle('fa-pause', isPlaying);
+    });
+
+    // Simple progress bar simulation
+    const progressBar = document.getElementById('progressBar');
+    const currentTime = document.getElementById('currentTime');
+    const duration = document.getElementById('duration');
+
+    let progress = 0;
+    let durationSeconds = 225; // 3:45 in seconds
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return m + ':' + (s < 10 ? '0' + s : s);
+    }
+
+    progressBar.addEventListener('input', (e) => {
+      progress = e.target.value;
+      currentTime.textContent = formatTime(Math.floor((progress / 100) * durationSeconds));
+    });
+
+    // Volume control (no actual audio)
+    const volumeControl = document.getElementById('volumeControl');
+    volumeControl.addEventListener('input', (e) => {
+      // Placeholder for volume control
+    });
+
+    // Simple user auth simulation with localStorage
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+
+    function showAlert(message) {
+      alert(message);
+    }
+
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+
+      if (!name || !email || !password) {
+        showAlert('Please fill all fields.');
+        return;
+      }
+
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (users.find((u) => u.email === email)) {
+        showAlert('User already exists with this email.');
+        return;
+      }
+
+      users.push({ name, email, password });
+      localStorage.setItem('users', JSON.stringify(users));
+      showAlert('Sign up successful! You can now log in.');
+      signupModal.classList.add('hidden');
+      signupForm.reset();
+    });
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find((u) => u.email === email && u.password === password);
+
+      if (!user) {
+        showAlert('Invalid email or password.');
+        return;
+      }
+
+      showAlert(`Welcome back, ${user.name}!`);
+      loginModal.classList.add('hidden');
+      loginForm.reset();
+
+      // Update UI to logged in state
+      loginBtn.classList.add('hidden');
+      signupBtn.classList.add('hidden');
+
+      const userDisplay = document.createElement('div');
+      userDisplay.id = 'userDisplay';
+      userDisplay.className = 'text-green-500 font-semibold';
+      userDisplay.textContent = `Hello, ${user.name}`;
+      document.querySelector('nav > div.flex.items-center.space-x-4').appendChild(userDisplay);
+    });
+  </script>
+ </body>
+</html>

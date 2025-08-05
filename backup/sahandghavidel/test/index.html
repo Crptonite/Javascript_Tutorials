@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Photos</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="image-container">
+    <img src="https://picsum.photos/300?random=1" alt="Random Image1" />
+    <img src="https://picsum.photos/200/300" alt="Random Image2" />
+    <img src="https://picsum.photos/300?random=2" alt="Random Image3" />
+  </div>
+
+  <button class="btn">Load More</button>
+
+  <div class="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="error-message">
+    <p>Failed to load images. Please try again later.</p>
+    <button class="retry-btn">Retry</button>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+# Set up the figure and axis
+fig, ax = plt.subplots()
+
+# Set the limits of the plot
+ax.set_xlim(-1.5, 1.5)
+ax.set_ylim(-1.5, 1.5)
+ax.set_aspect('equal')  # Ensure the sun is circular
+ax.axis('off')  # Hide the axes
+
+# Create the sun (a yellow circle)
+sun = plt.Circle((0, 0), 0.5, color='yellow', zorder=10)
+ax.add_patch(sun)
+
+# Create the sun rays (lines radiating from the sun)
+num_rays = 12
+rays = []
+for i in range(num_rays):
+    angle = 2 * np.pi * i / num_rays
+    ray = ax.plot([0.5 * np.cos(angle), 1.2 * np.cos(angle)],
+                  [0.5 * np.sin(angle), 1.2 * np.sin(angle)], color='orange', lw=2)[0]
+    rays.append(ray)
+
+# Draw the smiling face
+# Eyes (corrected positions)
+left_eye = plt.Circle((-0.2, 0.1), 0.05, color='black', zorder=15)
+right_eye = plt.Circle((0.2, 0.1), 0.05, color='black', zorder=15)
+ax.add_patch(left_eye)
+ax.add_patch(right_eye)
+
+# Smile (a semi-circle)
+smile_angle = np.linspace(np.pi / 6, 5 * np.pi / 6, 100)
+smile_x = 0.3 * np.cos(smile_angle)
+smile_y = 0.3 * np.sin(smile_angle) - 0.1
+smile, = ax.plot(smile_x, smile_y, color='black', lw=3, zorder=15)
+
+# Function to update the animation (rotate the rays)
+def update(frame):
+    for i, ray in enumerate(rays):
+        angle = 2 * np.pi * i / num_rays + frame * 0.1
+        ray.set_data([0.5 * np.cos(angle), 1.2 * np.cos(angle)],
+                     [0.5 * np.sin(angle), 1.2 * np.sin(angle)])
+    return rays
+
+# Create the animation
+ani = animation.FuncAnimation(fig, update, frames=100, interval=50, blit=True)
+
+# Display the animation
+plt.show()
